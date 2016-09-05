@@ -1,0 +1,4 @@
+name: FakeMaxPlayerCount
+main: com.github.ustc_zzzz.fakemaxplayercount.bungeecord.FakeMaxPlayerCount
+version: 0.1.1
+author: ustc_zzzz

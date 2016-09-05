@@ -9,12 +9,36 @@ repositories {
         name = 'sponge'
         url = 'http://repo.spongepowered.org/maven'
     }
+    maven {
+        name = 'bungeecord-repo'
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
 }
 
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
+configurations {
+    library
+    libraryBungeeCord
+}
+
 dependencies {
     compile 'org.spongepowered:spongeapi:4.1.0'
+    compile 'net.md-5:bungeecord-api:1.7-SNAPSHOT'
+
+    libraryBungeeCord 'net.md-5:bungeecord-api:1.7-SNAPSHOT'
+
+    library 'ninja.leaping.configurate:configurate-core:3.1.1'
+    library 'ninja.leaping.configurate:configurate-hocon:3.1.1'
+}
+
+jar {
+    dependsOn configurations.runtime
+    from {
+        (configurations.library - configurations.libraryBungeeCord).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
 
